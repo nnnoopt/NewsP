@@ -1,0 +1,60 @@
+1.
+u1 = User.objects.create_user('u1')
+u2 = User.objects.create_user('u2')
+
+2.
+Author.objects.create(user=u1)
+Author.objects.create(user=u2)
+
+3.
+Category.objects.create(name = 'Sport')
+Category.objects.create(name = 'Travel')
+Category.objects.create(name = 'Pop')
+Category.objects.create(name = 'Live')
+
+4 и 5
+Post.objects.create(category_type='NWS', author=Author.objects.get(user__username="u1"), title='title1', text='text1').category.set([Category.objects.get(name='Live')])
+Post.objects.create(category_type='ART', author=Author.objects.get(user__username="u2"), title='title2', text='text2').category.set([Category.objects.get(name='Sport')])
+Post.objects.create(category_type='ART', author=Author.objects.get(user__username="u1"), title='title3', text='text3').category.set([Category.objects.get(name='Live')], [Category.objects.get(name='Sport')])
+
+6.
+Comment.objects.create(post=Post.objects.get(title='title1'), user=User.objects.get(username='u1'), text='coment1')
+Comment.objects.create(post=Post.objects.get(title='title2'), user=User.objects.get(username='u1'), text='coment2')
+Comment.objects.create(post=Post.objects.get(title='title3'), user=User.objects.get(username='u2'), text='coment3')
+Comment.objects.create(post=Post.objects.get(title='title1'), user=User.objects.get(username='u1'), text='coment4')
+
+7.
+Post.like(Post.objects.get(title='title1'))
+Post.dislike(Post.objects.get(title='title1'))
+
+Comment.like(Comment.objects.get(id=1))
+Comment.dislike(Comment.objects.get(id=1))
+
+8.
+Author.update_rating(Author.objects.get(user__username='u1'))
+Author.update_rating(Author.objects.get(user__username='u2'))
+
+9.
+Author.objects.order_by('-rating').first().user.username
+Author.objects.order_by('-rating').first().rating
+
+10.
+p = Post.objects.order_by('-rating').first()
+p.create_at
+p.author.user.username
+p.rating
+p.title
+p.preview()
+
+11.
+Post.objects.all().order_by("-rating").first().comment_set.all().values("create_at", "user__username", "rating", "text")
+
+
+
+
+
+
+
+
+
+
