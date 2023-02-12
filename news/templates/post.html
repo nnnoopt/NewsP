@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+{% block title %} Post {% endblock title %}
+
+
+{% block content %}
+
+
+<h5 class="card-title">{{ post.title }}</h5>
+<h6 class="card-subtitle mb-2 text-muted">Дата публикации: {{ post.time | date:'d M Y' }}</h6>
+<p class="card-text">{{ post.text | censor }}</p>
+<a href="/news/" class="card-link">К списку статей...</a>
+
+{% endblock content %}
